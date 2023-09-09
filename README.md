@@ -94,7 +94,7 @@ esse comando  serve para o gerente ou cargos administrativos do banco terem aces
 
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `query` | `string` | **Obrigatório**. senha do usuário para ter acesso a essa lista  |
+| `string` | `quaery` | **Obrigatório**. senha do usuário para ter acesso a essa lista  |
 
 > ***Observação:** Nas demonstrações a seguir iniciamos o aplicativo sem nenhum dado de conta armazenado, assim como seria um banco que não tem clientes.*
 
@@ -152,17 +152,17 @@ POST /contas
 
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `body` | `object` | **Obrigatório**. Objeto com os dados do cliente.  |
+| `object` | `body` | **Obrigatório**. Objeto com os dados do cliente.  |
 
 Objeto a ser informado no body da requisição deve seguir o seguinte formato.
 
 ```javascript
 {     
-	"nome": "usuario", 
-	"cpf": "45645645688",   
+	"nome": "Usuario Original", 
+	"cpf": "12312312355",   
 	"data_nascimento": "2021-03-15",
 	"telefone": "71999998888",  
-	"email": "segundousuario@banco.com",   
+	"email": "usuariooriginal@banco.com",   
 	"senha": "12345"
 }
 ```
@@ -170,10 +170,10 @@ Após requisição ser enviada as seguintes mensagens são exibidas.
 
 > ***Observação:* O número atribuído a conta criada é feito de forma automática, sendo que cada conta tenha uma numeração única e todas as contas são iniciadas com saldo de 0,00.**
 
-### Resposta bem sucedida:
+#### Resposta bem sucedida:
 
 <p align="center">
-  <img src="https://i.imgur.com/IG0sv5P.png" alt="Exemplo de resposta bem sucedida." />
+  <img src="https://i.imgur.com/HQxbfql.png" alt="Exemplo de resposta bem sucedida." />
 </p>
 <p align="center">  <i><b>FIGURA 2:</b> Exemplo de resposta bem sucedida. </i></p>
 
@@ -182,7 +182,7 @@ Após requisição ser enviada as seguintes mensagens são exibidas.
 
 Como mostra a figura 2, o requisição não gera uma resposta ao usuário a não ser o status 201 (created).
 
-### Falhas na requisição:
+#### Falhas na requisição:
 
 Foram implementados alguns métodos de validação para possíveis erros que o usuário venha a cometer. A seguir são exemplificados alguns exemplos
 
@@ -214,8 +214,8 @@ PUT /contas/:numeroConta/usuario
 
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `query` | `number` | **Obrigatório**. Número da conta a ter as informações alteradas.  |
-| `body` | `object` | **Obrigatório**. Dados que serão substituídos na conta informada.
+| `numeroConta` | `param` | **Obrigatório**. Número da conta a ter as informações alteradas.  |
+| `object` | `body` | **Obrigatório**. Dados que serão substituídos na conta informada.
 
 Essa requisição é enviado no seu body o objeto contendo os dados do usuário a der utilizado, sendo o objeto no seguinte formato:
 
@@ -231,7 +231,7 @@ Essa requisição é enviado no seu body o objeto contendo os dados do usuário 
 ```
 após o envio da requisição as seguintes mensages podem ser exibidas.
 
-### Resposta bem sucedida
+#### Resposta bem-sucedida
 
 <p align="center">
   <img src="https://i.imgur.com/FLNfQBY.png" alt="Exemplo de resposta bem sucedida." />
@@ -245,10 +245,10 @@ e na tabela a seguir podes ver o comando `Listar` sendo usado antes e depois da 
 | Antes   | Depois       | 
 | :----------: | :---------: | 
 |![antes](https://i.imgur.com/Jv4My33.png) | ![depois](https://i.imgur.com/zVINCsh.png)
+<p align="center">  <i><b>TABELA 1:</b> Conta antes de depois das propriedades do usuário serem alteradas. </i></p>
 
 
-
-### Falhas na requisição:
+#### Falhas na requisição:
 
 Nossa API está preparada para tratar também alguns tipo de falhas na requisição.
 
@@ -280,3 +280,233 @@ Tendo em vista que é impossível alterar os dados de uma conta que ainda não e
 <p align="center">  <i><b>FIGURA 8:</b> Tentando alterar os dados de uma conta que não existe. </i></p>
 
 Temos na figura 8 a exemplificação da resposta obtida ao se tentar alterar uma conta que ainda não exite, foi enviado o número 2 no parâmetro do tipo `query`. E como reposta obtivemos ``{"mensagem": "a conta informada não foi encontrada!"}`` e também o status code 404 (Not Found).
+
+### Apagar conta
+
+Essa funcionalidade tem por objetivo apagar uma determinada conta de usuário.
+
+```http
+ DELETE /contas/:numeroConta/usuario
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `numeroConta` | `param` | **Obrigatório**. Número da conta que será apagada.  |
+
+Essa requisição necessita apenas de um parâmetro e não deve ser enviado nada no body da requisição.
+
+#### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/l9qSiRi.png" alt="Resposta para requisição delete." />
+</p>
+<p align="center">  <i><b>FIGURA 9:</b> Resposta para requisição delete. </i></p>
+
+Assim como na figura 9, o sistema respode a requisição apenas com o status code 200 (OK).
+
+#### Falhas na requisição:
+
+A segui são mostradas alguns possíveis erros que o usuário pode comenter na sua requisição.
+
+-  **Apagar uma conta que não exite**
+
+<p align="center">
+  <img src="https://i.imgur.com/adqd2h4.png" alt="Resposta ao tentar apagar uma conta que não existe." />
+</p>
+<p align="center">  <i><b>FIGURA 10:</b> Resposta ao tentar apagar uma conta que não existe.</i></p>
+
+Antes de apagar uma conta, primeiro verifica-se se ela realmente existe no banco de dados. Em caso de não encontrada a resposta é ```{"mensagem": "a conta não foi encontrada!}``` e o status code 404 (Not Found) como mostra a figura 10.
+
+- **Conta com saldo**
+
+<p align="center">
+  <img src="https://i.imgur.com/DfBcfv3.png" alt="Resposta ao tentar apagar uma conta que o saldo é diferente de 0." />
+</p>
+<p align="center">  <i><b>FIGURA 11:</b> Resposta ao tentar apagar uma conta que o saldo é diferente de 0</i></p>
+
+A figura 11 nos mostra a resposta de quando se tenta apagar uma conta que ainda tem dinheiro obtemos a resposta `{"mensagem": "A conta só pode ser removida se o saldo for igual a zero!"}` e também o status code 403 (Forbidden), o correto é que se saque todo o dinheiro dessa conta e depois a apague.
+
+### Depósito
+
+Foi implementada também a função para realizar depósitos.
+
+```http
+ POST /transacoes/depositar
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `object` | `body` | **Obrigatório**. Objeto com os dados| 
+
+O objeto que deverá ser enviado na requisição deve ter o seguinte formato.
+
+```javascript
+{
+	"numero_conta": "1",
+	"valor": "1000"
+}
+```
+
+> ***Observação:** O campo valor deve ser preenchido com a quantidade de dinheiro tranformada em centavos. Exemplo: para depositar R$ 1,00 deverá ser informado 100 centavos no campo.*
+
+#### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/5FxpCVp.png" alt="Resposta ao efetuar um depósito." />
+</p>
+<p align="center">  <i><b>FIGURA 12:</b> Resposta ao efetuar um depósito.</i></p>
+
+A resposta para a requisição é um status code 200 (OK), como mostrado na figura 12.
+
+#### Falhas na requisição
+
+- **Parâmetro não informado:**
+
+<p align="center">
+  <img src="https://i.imgur.com/U3Gv1zH.png" alt="Resposta ao tentar enviar um depósito sem informar um parâmetro." />
+</p>
+<p align="center">  <i><b>FIGURA 13:</b> Resposta ao tentar enviar um depósito sem informar um parâmetro.</i></p>
+
+Na figura 13 podemos observar que além do status code 404 (Bad Request) temos também como resposta a mensagem ```{"mensagem": "O número da conta e o valor são obrigatórios!"}```.
+
+> ***Obervação:** Essa será a reposta caso o valor seja preenchido com zero ou com números negativos.*
+
+- **Depósito em conta que não existe**
+
+<p align="center">
+  <img src="https://i.imgur.com/2T5EPrb.png" alt="Resposta ao tentar enviar um depósito sem informar um parâmetro." />
+</p>
+<p align="center">  <i><b>FIGURA 14:</b> Resposta ao tentar fazer depósito em uma conta que ainda não existe.</i></p>
+
+Aqui temos a figura 14 ilustrando a resposta ``{
+	"mensagem": "a conta informada não foi encontrada!"
+}`` junto com seu status code 404 (Not Found).
+
+### Saque
+
+Para a função saque o seguinte endereço será usado:
+
+```http
+POST /transacoes/sacar
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `object` | `body` | **Obrigatório**. Objeto com os dados da requisição. | 
+
+O objeto deverá ter as seguintes propriedades.
+
+```javascript
+{
+	"numero_conta": "1",
+	"valor": "1000",
+	"senha": "12345"
+}
+```
+A API analisa a conta que será sacado o valor, que deverá ser informado em centavos, e a senha dessa conta.
+
+#### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/pHb1Pax.png" alt="Resposta ao tentar enviar um depósito sem informar um parâmetro." />
+</p>
+<p align="center">  <i><b>FIGURA 15:</b> Resposta ao sacar.</i></p>
+
+A funcionalidade de saque funciona dimuindo o valor do saldo da conta informada quando a senha é correta para acessar determinada conta. A figura 15 nos mostra como o servidor responde a essa requisição, nos mostrando o status code 200 (OK!).
+
+#### Falhas na requisição
+
+- **Senha incorreta**
+
+<p align="center">
+  <img src="https://i.imgur.com/hzOSCkI.png" alt="Resposta ao tentar sacar o valor de uma conta informado a senha errada." />
+</p>
+<p align="center">  <i><b>FIGURA 16:</b> Resposta ao tentar sacar o valor de uma conta informado a senha errada.</i></p>
+
+Pode-se notar que a senha informada é diferente da criada junto com a conta no método `Criar conta`, e por isso a API nos retorna o status code 401 (Unauthorized) junto com ``{ "mensagem": "senha incorreta!" }``.
+
+- **Saque de uma conta que não existe**
+
+<p align="center">
+  <img src="https://i.imgur.com/jGqSmtI.png" alt="Resposta ao tentar sacar o valor de uma conta informado a senha errada." />
+</p>
+<p align="center">  <i><b>FIGURA 17:</b> Resposta ao tentar sacar o valor de uma conta que não exista.</i></p>
+
+Ao tentar sacar o valor de uma conta ainda não existente temos a resposta `{
+	"mensagem": "a conta informada não foi encontrada!"
+}` e seu status code 404 (Not Found).
+
+### Transferir
+
+É possível que seja feito uma tranferência entre contas do mesmo banco.
+
+```http
+POST /transacoes/transferir
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `object` | `body` | **Obrigatório**. Objeto com os dados da requisição. | 
+
+O objeto deverá ter as seguintes propriedades.
+
+```javascript
+{
+	"numero_conta_origem": "1",
+	"numero_conta_destino": "2",
+	"valor": 500,
+	"senha": "12345"
+}
+```
+
+#### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/achqqIH.png" alt="Resposta ao tentar sacar o valor de uma conta informado a senha errada." />
+</p>
+<p align="center"><i><b>FIGURA 18:</b> Resposta ao tentar sacar o valor de uma conta que não exista.</i></p>
+
+Como obervado na figura 18, temos como reposta apenas o status code 200(OK).
+
+#### Falhas na requisição 
+
+- **Conta de origem ou destino não existem**
+
+<p align="center">
+  <img src="https://i.imgur.com/FMqmXbg.png" alt="Resposta ao tentar transferir valores de conta que não existe." />
+</p>
+<p align="center"><i><b>FIGURA 19:</b> Resposta ao tentar transferir valores de conta de origem ou destino que não existem.</i></p>
+
+Pode-se observar que a API faz a mesma validação para descobrir se a conta de destino ou de origem do valor existe e com isso nos da a resposta `{"mesagem": "A conta de destino ou origem não existe!"}` acompanhado do status code 404.
+
+- **Senha da conta de origem incorreta**
+
+<p align="center">
+  <img src="https://i.imgur.com/6xVK9g9.png" alt="Resposta ao tentar transferir valores com a senha da conta de origem errada." />
+</p>
+<p align="center"><i><b>FIGURA 20:</b> Resposta ao tentar transferir valores com a senha da conta de origem errada.</i></p>
+
+A fim de adicionar uma camada de seguraça a API confere a senha que foi informada pelo usuário com a senha que foi criada junto com a conta, caso a senha esteja incorreta será retornado `{"mensagem": "Senha incorreta!"}` como ilustra a figura 20.
+
+- **Saldo insuficiente**
+
+<p align="center">
+  <img src="https://i.imgur.com/sD7Sa1W.png" alt="Resposta ao tentar transferir um valor maior que o disponível na conta." />
+</p>
+<p align="center"><i><b>FIGURA 21:</b> Resposta ao tentar transferir um valor maior que o disponível na conta.</i></p>
+
+Caso o usuário tente transferir um valor maior que o disponível na sua conta o erro da figura 21 será retornado, evitando que usuários tentende alguma forma fraudar o saldo das contas.
+
+> ***Observação:** Em casos onde o valor informado seja zero ou um valor negativo terão essa mesma resposta.*
+
+### Saque
+
+Para a função saldo o seguinte endereço será usado:
+
+```http
+POST /contas/saldo
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `numero_conta` | `query` | **Obrigatório**. Número da conta. | 
+| `senha` | `query` | **Obrigatório**. Senha da conta
+
+#### Resposta bem-sucedida
