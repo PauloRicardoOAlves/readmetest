@@ -100,7 +100,7 @@ Esse comando  serve para o gerente ou cargos administrativos do banco terem aces
 
 #### Retorna
 
-- Exemplo 1: banco de dados vazio
+- Exemplo 1: Banco de dados vazio
 ```javascript
   []
 ```
@@ -168,7 +168,7 @@ Objeto a ser informado no body da requisição deve seguir o seguinte formato.
 ```
 Após requisição ser enviada as seguintes mensagens são exibidas.
 
-> ***Observação:* O número atribuído a conta criada é feito de forma automática, sendo que cada conta tenha uma numeração única e todas as contas são iniciadas com saldo de 0,00.**
+> ***Observação:* O número atribuído a conta criada é feito de forma automática, sendo que cada conta tenha uma numeração única e todas as contas serão iniciadas com saldo de 0,00.**
 
 #### Resposta bem sucedida:
 
@@ -184,7 +184,7 @@ Como mostra a figura 2, o requisição não gera uma resposta ao usuário a não
 
 #### Falhas na requisição:
 
-Foram implementados alguns métodos de validação para possíveis erros que o usuário venha a cometer. A seguir são exemplificados alguns exemplos
+Foram implementados alguns métodos de validação para possíveis erros que o usuário venha a cometer. A seguir são alguns são exemplificados:
 
 - **Parâmetro em branco:**
 
@@ -229,7 +229,7 @@ Essa requisição é enviado no seu body o objeto contendo os dados do usuário 
 	"senha": "12345"
 }
 ```
-Após o envio da requisição as seguintes mensages podem ser exibidas.
+Após o envio da requisição, as seguintes mensages podem ser exibidas:
 
 #### Resposta bem-sucedida
 
@@ -245,7 +245,7 @@ E na tabela a seguir podes ver o comando `Listar` sendo usado antes e depois da 
 | Antes   | Depois       | 
 | :----------: | :---------: | 
 |![antes](https://i.imgur.com/Jv4My33.png) | ![depois](https://i.imgur.com/zVINCsh.png)
-<p align="center">  <i><b>TABELA 1:</b> Conta antes de depois das propriedades do usuário serem alteradas. </i></p>
+<p align="center">  <i><b>TABELA 1:</b> Conta antes e depois das propriedades do usuário serem alteradas. </i></p>
 
 
 #### Falhas na requisição:
@@ -263,7 +263,7 @@ Nossa API está preparada para tratar também alguns tipo de falhas na requisiç
 
 - **Cadastrar CPF ou E-mail já existentes em outra conta:**
 
-Como já citado, no banco de dados só pode ter uma conta vinculada ao mesmo CPF ou e-mail, A figura 7 nos mostra como é respotado esse erro bem como o seu status code.
+Como já citado, no banco de dados só pode ter uma conta vinculada ao mesmo CPF ou e-mail. A figura 7 nos mostra como é reportado esse erro bem como o seu status code.
 
 <p align="center">
   <img src="https://i.imgur.com/iDgvX1s.png" alt="Erro por já existir o CPF e o e-mail informados viculados a outra conta." />
@@ -279,7 +279,7 @@ Tendo em vista que é impossível alterar os dados de uma conta que ainda não e
 </p>
 <p align="center">  <i><b>FIGURA 8:</b> Tentando alterar os dados de uma conta que não existe. </i></p>
 
-Temos na figura 8 a exemplificação da resposta obtida ao se tentar alterar uma conta que ainda não exite, foi enviado o número 2 no parâmetro do tipo `query`. E como reposta obtivemos ``{"mensagem": "a conta informada não foi encontrada!"}`` e também o status code 404 (Not Found).
+Temos, na figura 8, a exemplificação da resposta obtida ao se tentar alterar uma conta que ainda não exite, foi enviado o número 2 no parâmetro do tipo `query`. E como reposta obtivemos ``{"mensagem": "a conta informada não foi encontrada!"}`` e também o status code 404 (Not Found).
 
 ### Apagar conta
 
@@ -306,7 +306,7 @@ Assim como na figura 9, o sistema respode a requisição apenas com o status cod
 
 #### Falhas na requisição:
 
-A segui são mostradas alguns possíveis erros que o usuário pode comenter na sua requisição.
+A seguir são mostradas alguns possíveis erros que o usuário pode cometer na sua requisição.
 
 -  **Apagar uma conta que não exite**
 
@@ -324,7 +324,7 @@ Antes de apagar uma conta, primeiro verifica-se se ela realmente existe no banco
 </p>
 <p align="center">  <i><b>FIGURA 11:</b> Resposta ao tentar apagar uma conta que o saldo é diferente de 0</i></p>
 
-A figura 11 nos mostra a resposta de quando se tenta apagar uma conta que ainda tem dinheiro obtemos a resposta `{"mensagem": "A conta só pode ser removida se o saldo for igual a zero!"}` e também o status code 403 (Forbidden), o correto é que se saque todo o dinheiro dessa conta e depois a apague.
+A figura 11, nos mostra a resposta de quando se tenta apagar uma conta que ainda tem dinheiro. Obtemos a resposta `{"mensagem": "A conta só pode ser removida se o saldo for igual a zero!"}` e também o status code 403 (Forbidden), o correto é que se saque todo o dinheiro dessa conta e depois a apague.
 
 ### Depósito
 
@@ -347,7 +347,7 @@ O objeto que deverá ser enviado na requisição deve ter o seguinte formato.
 }
 ```
 
-> ***Observação:** O campo valor deve ser preenchido com a quantidade de dinheiro tranformada em centavos. Exemplo: para depositar R$ 1,00 deverá ser informado 100 centavos no campo.*
+> ***Observação:** O campo valor deve ser preenchido com a quantidade de dinheiro tranformada em centavos. Exemplo: para depositar R$ 1,00, deverá ser informado 100 centavos no campo.*
 
 #### Resposta bem-sucedida
 
@@ -367,7 +367,7 @@ A resposta para a requisição é um status code 200 (OK), como mostrado na figu
 </p>
 <p align="center">  <i><b>FIGURA 13:</b> Resposta ao tentar enviar um depósito sem informar um parâmetro.</i></p>
 
-Na figura 13 podemos observar que além do status code 404 (Bad Request) temos também como resposta a mensagem ```{"mensagem": "O número da conta e o valor são obrigatórios!"}```.
+Na figura 13, podemos observar que além do status code 404 (Bad Request,) temos também como resposta a mensagem ```{"mensagem": "O número da conta e o valor são obrigatórios!"}```.
 
 > ***Obervação:** Essa será a reposta caso o valor seja preenchido com zero ou com números negativos.*
 
@@ -378,7 +378,7 @@ Na figura 13 podemos observar que além do status code 404 (Bad Request) temos t
 </p>
 <p align="center">  <i><b>FIGURA 14:</b> Resposta ao tentar fazer depósito em uma conta que ainda não existe.</i></p>
 
-Aqui temos a figura 14 ilustrando a resposta ``{
+Aqui temos a figura 14, ilustrando a resposta ``{
 	"mensagem": "a conta informada não foi encontrada!"
 }`` junto com seu status code 404 (Not Found).
 
@@ -411,7 +411,7 @@ A API analisa a conta que será sacado o valor, que deverá ser informado em cen
 </p>
 <p align="center">  <i><b>FIGURA 15:</b> Resposta ao sacar.</i></p>
 
-A funcionalidade de saque funciona dimuindo o valor do saldo da conta informada quando a senha é correta para acessar determinada conta. A figura 15 nos mostra como o servidor responde a essa requisição, nos mostrando o status code 200 (OK!).
+O saque funciona dimuindo o valor do saldo da conta informada, quando a senha é correta para acessar determinada conta. A figura 15 nos mostra como o servidor responde a essa requisição, nos mostrando o status code 200 (OK!).
 
 #### Falhas na requisição
 
@@ -475,7 +475,7 @@ Como obervado na figura 18, temos como reposta apenas o status code 200(OK).
 </p>
 <p align="center"><i><b>FIGURA 19:</b> Resposta ao tentar transferir valores de conta de origem ou destino que não existem.</i></p>
 
-Pode-se observar que a API faz a mesma validação para descobrir se a conta de destino ou de origem do valor existe e com isso nos da a resposta `{"mesagem": "A conta de destino ou origem não existe!"}` acompanhado do status code 404.
+Pode-se observar que a API faz a mesma validação para descobrir se a conta de destino ou de origem existe, e com isso nos dá a resposta `{"mesagem": "A conta de destino ou origem não existe!"}` acompanhado do status code 404.
 
 - **Senha da conta de origem incorreta**
 
@@ -493,13 +493,13 @@ A fim de adicionar uma camada de seguraça a API confere a senha que foi informa
 </p>
 <p align="center"><i><b>FIGURA 21:</b> Resposta ao tentar transferir um valor maior que o disponível na conta.</i></p>
 
-Caso o usuário tente transferir um valor maior que o disponível na sua conta o erro da figura 21 será retornado, evitando que usuários tentende alguma forma fraudar o saldo das contas.
+Caso o usuário tente transferir um valor maior que o disponível na sua conta o erro da figura 21 será retornado, evitando que usuários tentem alguma forma fraudar o saldo das contas.
 
 > ***Observação:** Em casos onde o valor informado seja zero ou um valor negativo terão essa mesma resposta.*
 
 ### Saldo
 
-Para a função saldo o seguinte endereço será usado:
+Para a função saldo, o seguinte endereço será usado:
 
 ```http
 GET /contas/saldo
@@ -582,4 +582,4 @@ A figura 26 ilustra o caso em que o usuário tenta acessar o extrato de uma cont
 Aqui temos a figura 27 que nos mostra a resposta da API para um usuário que tentou ver o extrato, mas que errou a senha da sua conta.
 
 
-Em conclusão, esta documentação da API do nosso banco digital fornece um recurso valioso para desenvolvedores que desejam integrar seus aplicativos e sistemas com nossos serviços financeiros. Ao longo deste documento, detalhamos de forma abrangente os endpoints, parâmetros e autenticação necessários para realizar operações bancárias, consultas de saldo, transferências de fundos e muito mais.
+Em conclusão, esta documentação da API do nosso banco digital fornece um recurso valioso para desenvolvedores que desejam integrar seus aplicativos e sistemas com nossos serviços financeiros. Ao longo deste documento, detalhamos de forma abrangente os endpoints, parâmetros e autenticação necessários para realizar operações bancárias, consultas de saldo, transferências de fundos e muito mais
