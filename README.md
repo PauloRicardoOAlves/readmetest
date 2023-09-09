@@ -14,15 +14,15 @@ Como desenvolvedor recém contratado da melhor empresa de tecnologia do mundo: a
 
 Foi construída uma API que tem as seguintes funcionalidades:
 
--   Criar conta bancária
--   Listar contas bancárias
--   Atualizar os dados do usuário da conta bancária
--   Excluir uma conta bancária
--   Depositar em uma conta bancária
--   Sacar de uma conta bancária
--   Transferir valores entre contas bancárias
--   Consultar saldo da conta bancária
--   Emitir extrato bancário
+-   Criar conta bancária;
+-   Listar contas bancárias;
+-   Atualizar os dados do usuário da conta bancária;
+-   Excluir uma conta bancária;
+-   Depositar em uma conta bancária;
+-   Sacar de uma conta bancária;
+-   Transferir valores entre contas bancárias;
+-   Consultar saldo da conta bancária;
+-   Emitir extrato bancário.
 
 
 ## Pré-requisitos
@@ -33,36 +33,36 @@ Foi construída uma API que tem as seguintes funcionalidades:
 ## Instalação
 
 
-primeiro deve-se *forkar* o repositório no GitHub.
+Primeiro deve-se *forkar* o repositório no GitHub.
 
-depois clone o seu repositório para sua máquina através do comando git clone.
+Depois clone o seu repositório para sua máquina através do comando git clone.
 
 ```
 git clone [endereço]
 ```
 
-o enreço pode ser obtido seguindo o exemplo da imagem abaixo, primeiro clicando em no botão code (destacado em azul) e em seguida no botão para copiar o endereço (destacado em vermelho).
+O enreço pode ser obtido seguindo o exemplo da imagem abaixo, primeiro clicando em no botão code (destacado em azul) e em seguida no botão para copiar o endereço (destacado em vermelho).
 
 ![imagem](https://i.imgur.com/xcFioNg.png)
 <p align="center">  <i><b>FIGURA 1:</b> Obtendo o endereço SSH. </i></p>
 
-instale na pasta raiz do seu projeto a biblioteca express para gerenciar requisições de diferentes verbos HTTP em diferentes URLs, usando o seguinte comando no seu terminal:
+Instale na pasta raiz do seu projeto a biblioteca express para gerenciar requisições de diferentes verbos HTTP em diferentes URLs, usando o seguinte comando no seu terminal:
 
 ```
   npm install express 
 ```
-e para que  servidor seja reiniciado automaticamente com as novas alterações salvas, instale a biblioteca nodemon como dependência de desenvolvimento usando o seguinte comando no seu terminal:
+E para que  servidor seja reiniciado automaticamente com as novas alterações salvas, instale a biblioteca nodemon como dependência de desenvolvimento usando o seguinte comando no seu terminal:
 
 ```
 npm install -D nodemon
 ```
-além disso precisaremos também ter o insomnia ou alguma outra ferramenta de sua preferência para poder enviar suas solicitações HTTP e também obter as suas respostas
+Além disso precisaremos também ter o insomnia ou alguma outra ferramenta de sua preferência para poder enviar suas solicitações HTTP e também obter as suas respostas
     
 ## Documentação da API
 
-todas as solicitações usam a porta local 3000 através do endereço `localhost:3000/`
+Todas as solicitações usam a porta local 3000 através do endereço `localhost:3000/`
 
-os arquivos da API estão dividido como o padrão REST, nas seguintes pastas.
+Os arquivos da API estão dividido como o padrão REST, nas seguintes pastas.
 
 - src
 
@@ -81,12 +81,12 @@ os arquivos da API estão dividido como o padrão REST, nas seguintes pastas.
     - roteador.js
     
 
-a seguir são mostrados os endpoints e suas funcionalidades.
+A seguir são mostrados os endpoints e suas funcionalidades.
 
 ### Listar todas as contas
 
 
-esse comando  serve para o gerente ou cargos administrativos do banco terem acesso as contas criadas, bem como seus saldos, senhas e transferências feitas.
+Esse comando  serve para o gerente ou cargos administrativos do banco terem acesso as contas criadas, bem como seus saldos, senhas e transferências feitas.
 
 ```http
   GET /contas
@@ -229,7 +229,7 @@ Essa requisição é enviado no seu body o objeto contendo os dados do usuário 
 	"senha": "12345"
 }
 ```
-após o envio da requisição as seguintes mensages podem ser exibidas.
+Após o envio da requisição as seguintes mensages podem ser exibidas.
 
 #### Resposta bem-sucedida
 
@@ -240,7 +240,7 @@ após o envio da requisição as seguintes mensages podem ser exibidas.
 
 A figura 5 nos mostra que quando a requisição é bem sucedida a API nos retorna apenas o status code 200 (OK).
 
-e na tabela a seguir podes ver o comando `Listar` sendo usado antes e depois da requição de alteração ser enviada.
+E na tabela a seguir podes ver o comando `Listar` sendo usado antes e depois da requição de alteração ser enviada.
 
 | Antes   | Depois       | 
 | :----------: | :---------: | 
@@ -497,12 +497,12 @@ Caso o usuário tente transferir um valor maior que o disponível na sua conta o
 
 > ***Observação:** Em casos onde o valor informado seja zero ou um valor negativo terão essa mesma resposta.*
 
-### Saque
+### Saldo
 
 Para a função saldo o seguinte endereço será usado:
 
 ```http
-POST /contas/saldo
+GET /contas/saldo
 ```
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
@@ -510,3 +510,76 @@ POST /contas/saldo
 | `senha` | `query` | **Obrigatório**. Senha da conta
 
 #### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/cmIAfcX.png" alt="Resposta verificar o saldo da conta." />
+</p>
+<p align="center"><i><b>FIGURA 22:</b> Resposta verificar o saldo da conta.</i></p>
+
+Nesse caso a reposta é o saldo da conta 1 em centavos.
+
+#### Falhas na requisição
+
+- **Conta informada não existe**
+
+<p align="center">
+  <img src="https://i.imgur.com/X2nzyzq.png" alt="Resposta tentar verificar o saldo de uma conta que ainda não existe." />
+</p>
+<p align="center"><i><b>FIGURA 23:</b> Resposta tentar verificar o saldo de uma conta que ainda não existe.</i></p>
+
+Como observado na figura 23 a resposta obtida para essa falha é ``{"mensagem": "A conta bancária não encontrada!"}`` e seu status code 404 (Not Found).
+
+- **Senha incorreta**
+	
+<p align="center">
+  <img src="https://i.imgur.com/Ru2vYmH.png" alt="Resposta tentar verificar o saldo com uma senha incorreta." />
+</p>
+<p align="center"><i><b>FIGURA 24:</b> Resposta tentar verificar o saldo com uma senha incorreta.</i></p>
+
+Aqui verificamos que quando a senha informada não é a mesma da conta a resposta nos devolve o status 403 (Forbidden) junto com ``{"mensagem": "senha incorreta!"}``.
+
+### Extrato	
+
+Para a função extrato o seguinte endereço será usado:
+
+```http
+POST /contas/extrato
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `numero_conta` | `query` | **Obrigatório**. Número da conta. | 
+| `senha` | `query` | **Obrigatório**. Senha da conta
+
+Cada transação é armazenada com seu tipo (saque, depósito, transferência), horário e o valor. Quando se solicita o extrato de determinada conta obtem-se todas as transações que foram feitas. 
+
+#### Resposta bem-sucedida
+
+<p align="center">
+  <img src="https://i.imgur.com/rJ2eq14.png" alt="Resposta ao verificar o extrato da conta 1." />
+</p>
+<p align="center"><i><b>FIGURA 25:</b> Resposta ao verificar o extrato da conta 1.</i></p>
+
+O extrato mostra as transações divididas em depósitos, saque, transferências enviadas e transferências recebidas como ilustrado na figura 25.
+
+#### Falhas na requisição
+
+- **Conta não existente**
+
+<p align="center">
+  <img src="https://i.imgur.com/hGRVnQg.png" alt="Resposta ao verificar o extrato de uma conta que ainda não existe." />
+</p>
+<p align="center"><i><b>FIGURA 26:</b>Resposta ao verificar o extrato de uma conta que ainda não existe.</i></p>
+
+A figura 26 ilustra o caso em que o usuário tenta acessar o extrato de uma conta que ainda não existe.
+
+- **Senha incorreta**
+
+<p align="center">
+  <img src="https://i.imgur.com/cW6iefv.png" alt="Resposta ao verificar o extrato de uma conta com a senha incorreta" />
+</p>
+<p align="center"><i><b>FIGURA 27:</b>Resposta ao verificar o extrato de uma conta que ainda não existe.</i></p>
+
+Aqui temos a figura 27 que nos mostra a resposta da API para um usuário que tentou ver o extrato, mas que errou a senha da sua conta.
+
+
+Em conclusão, esta documentação da API do nosso banco digital fornece um recurso valioso para desenvolvedores que desejam integrar seus aplicativos e sistemas com nossos serviços financeiros. Ao longo deste documento, detalhamos de forma abrangente os endpoints, parâmetros e autenticação necessários para realizar operações bancárias, consultas de saldo, transferências de fundos e muito mais.
